@@ -1,0 +1,36 @@
+<definitions targetNamespace="http://xmlns.bancocajasocial.com/co/canales/servicios/ebs/ConsultarDetalleCDT/v1.0" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.bancocajasocial.com/co/canales/servicios/ebs/ConsultarDetalleCDT/v1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:cec="http://xmlns.bancocajasocial.com/co/canales/schemas/ebs/ConsultarDetalleCDT/v1.0">
+  <types>
+    <xsd:schema elementFormDefault="qualified">
+      <xsd:import schemaLocation="../Schemas/ConsultarDetalleCDT.xsd" namespace="http://xmlns.bancocajasocial.com/co/canales/schemas/ebs/ConsultarDetalleCDT/v1.0"/>
+    </xsd:schema>
+  </types>
+  <message name="MsgConsultarDetalleCDTRequest">
+    <part name="ConsultarDetalleCDTRequest" element="cec:ConsultarDetalleCDTRequest"/>
+  </message>
+  <message name="MsgConsultarDetalleCDTResponse">
+    <part name="ConsultarDetalleCDTResponse" element="cec:ConsultarDetalleCDTResponse"/>
+  </message>
+  <portType name="ConsultarDetalleCDTPortType">
+    <operation name="ConsultarDetalleCDT">
+      <input message="tns:MsgConsultarDetalleCDTRequest"/>
+      <output message="tns:MsgConsultarDetalleCDTResponse"/>
+    </operation>
+  </portType>
+  <binding name="ConsultarDetalleCDTSOAPBinding" type="tns:ConsultarDetalleCDTPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="ConsultarDetalleCDT">
+      <soap:operation style="document" soapAction="http://xmlns.bancocajasocial.com/co/canales/servicios/ebs/ConsultarDetalleCDT/v1.0/ConsultarDatosBasicosCliente"/>
+      <input>
+        <soap:body use="literal" parts="ConsultarDetalleCDTRequest"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="ConsultarDetalleCDTResponse"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="ConsultarDetalleCDT">
+    <port name="ConsultarDetalleCDTSOAPPort" binding="tns:ConsultarDetalleCDTSOAPBinding">
+      <soap:address location=""/>
+    </port>
+  </service>
+</definitions>

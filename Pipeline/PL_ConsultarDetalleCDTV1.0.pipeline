@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="CDTBancaEmpresasEBS/Resources/WSDLs/ConsultarDetalleCDT"/>
+            <con:binding>
+                <con:name>ConsultarDetalleCDTSOAPBinding</con:name>
+                <con:namespace>http://xmlns.bancocajasocial.com/co/canales/servicios/ebs/ConsultarDetalleCDT/v1.0</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:template-overrides>
+            <con:template-branch-override id="_FlowId-ad486d4.N71258a92.0.17604e070c3.N7d7a">
+                <con:branch-node>
+                    <con:branch-table>
+                        <con:branch name="ConsultarDetalleCDT">
+                            <con:operator>equals</con:operator>
+                            <con:value/>
+                            <con:template-overrides>
+                                <con:action-override id="_ActionId-ad486d4.N71258a92.0.17604e070c3.N7751">
+                                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:service ref="ConsultaDetalleABCV2.1/Proxies/PS_CONSULTA_DETALLE_CDTV2.1" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>consultarDetalleCDT</con1:operation>
+                                        <con1:request>
+                                            <con1:body wrapped="false">DetalleCDTRq</con1:body>
+                                            <con1:header>header</con1:header>
+                                        </con1:request>
+                                        <con1:response>
+                                            <con1:body wrapped="false">DetalleCDTRs</con1:body>
+                                            <con1:header>header</con1:header>
+                                        </con1:response>
+                                    </con1:wsCallout>
+                                </con:action-override>
+                                <con:action-override id="_ActionId-ad4867d.2d22cc65.0.18674bcba1c.N7b06">
+                                    <con1:assign varName="DetalleCDTRq" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:expr>
+                                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:resource ref="CDTBancaEmpresasEBS/Resources/XQUERYs/xq_IN_ConsultarDetalleCDTEBS_to_ConsultarDetalleCDTABC"/>
+                                                <con2:param name="consultarDetalleCDTRequest">
+                                                    <con2:path>$mensajeEntradaEBS</con2:path>
+                                                </con2:param>
+                                            </con2:xqueryTransform>
+                                        </con1:expr>
+                                    </con1:assign>
+                                </con:action-override>
+                                <con:action-override id="_ActionId-ad4867d.2d22cc65.0.18674bcba1c.N7bfb">
+                                    <con1:assign xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:expr>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">(:Cambiar Nombre:)
+$DetalleCDTRq</con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:assign>
+                                </con:action-override>
+                                <con:action-override id="_ActionId-ad4867d.2d22cc65.0.18674bcba1c.N7bc5">
+                                    <con1:assign xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:expr>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">(:Cambiar Nombre:)
+$DetalleCDTRs</con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:assign>
+                                </con:action-override>
+                                <con:stage-override id="_StageId-ad486d4.N71258a92.0.17604e070c3.N78cf">
+                                    <con:context>
+                                        <con1:userNsDecl prefix="v12" namespace="http://xmlns.bancocajasocial.com/co/canales/schemas/ebs/ConsultarDetalleCDT/v1.0" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                        <con1:userNsDecl prefix="v11" namespace="http://xmlns.bancocajasocial.com/co/canales/schema/ebs/servicios/ConsultarDetalleCDT/v1.0" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                        <con1:userNsDecl prefix="v1" namespace="http://xmlns.bancocajasocial.com/co/canales/schema/servicios/ConsultarDetalleCDT/v1.0" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                    </con:context>
+                                </con:stage-override>
+                                <con:placeholder-override id="PlaceholderID_ad4867d.2d22cc65.0.18674bcba1c.N7cb1"/>
+                                <con:action-override id="_ActionId-ad486d4.N71258a92.0.17604e070c3.N75d4">
+                                    <con1:replace xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:expr>
+                                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:resource ref="CDTBancaEmpresasEBS/Resources/XQUERYs/xq_OUT_ConsultarDetalleCDTEBS"/>
+                                                <con2:param name="detalleCDTResponse">
+                                                    <con2:path>$DetalleCDTRs</con2:path>
+                                                </con2:param>
+                                                <con2:param name="consultarDetalleCDTRequest">
+                                                    <con2:path>$mensajeEntradaEBS</con2:path>
+                                                </con2:param>
+                                                <con2:param name="consultarEstadoClientesBancaEmpresasResponse">
+                                                    <con2:path>$ConsultarEstatoClientesBancaEmpresasRs</con2:path>
+                                                </con2:param>
+                                            </con2:xqueryTransform>
+                                        </con1:expr>
+                                    </con1:replace>
+                                </con:action-override>
+                                <con:action-override id="_ActionId-ad48657.N255d001c.0.18683709dfb.N7ce5">
+                                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:service ref="EstadosClientesBancaEmpresasEBSV1.0/Proxies/ConsultarEstadoClientesBancaEmpresa" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>ConsultarEstadoClienteBancaEmpresas</con1:operation>
+                                        <con1:request>
+                                            <con1:body wrapped="false">ConsultarEstatoClientesBancaEmpresasRq</con1:body>
+                                            <con1:header>header</con1:header>
+                                        </con1:request>
+                                        <con1:response>
+                                            <con1:body wrapped="false">ConsultarEstatoClientesBancaEmpresasRs</con1:body>
+                                            <con1:header>header</con1:header>
+                                        </con1:response>
+                                    </con1:wsCallout>
+                                </con:action-override>
+                                <con:action-override id="_ActionId-ad48657.N255d001c.0.18683709dfb.N7ce4">
+                                    <con1:assign varName="ConsultarEstatoClientesBancaEmpresasRq" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:expr>
+                                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:resource ref="CDTBancaEmpresasEBS/Resources/XQUERYs/xq_IN_ConsultarDetalleCDTEBS_to_ConsultarEstadoClientesBancaEmpresasABC"/>
+                                                <con2:param name="detalleCDTResponse">
+                                                    <con2:path>$DetalleCDTRs</con2:path>
+                                                </con2:param>
+                                                <con2:param name="consultarDetalleCDTRequest">
+                                                    <con2:path>$mensajeEntradaEBS</con2:path>
+                                                </con2:param>
+                                            </con2:xqueryTransform>
+                                        </con1:expr>
+                                    </con1:assign>
+                                </con:action-override>
+                                <con:action-override id="_ActionId-ad48657.N255d001c.0.18683709dfb.N7ce3">
+                                    <con1:assign xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:expr>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">(:Cambiar Nombre:)
+$ConsultarEstatoClientesBancaEmpresasRq</con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:assign>
+                                </con:action-override>
+                                <con:action-override id="_ActionId-ad48657.N255d001c.0.18683709dfb.N7ce1">
+                                    <con1:assign xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:expr>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">(:Cambiar Nombre:)
+$ConsultarEstatoClientesBancaEmpresasRs</con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:assign>
+                                </con:action-override>
+                                <con:action-override id="_ActionId-ad486cf.508f513.0.17624fa7dcd.N7632">
+                                    <con1:replace xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:expr>
+                                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:resource ref="CDTBancaEmpresasEBS/Resources/XQUERYs/xq_OUT_ConsultarDetalleCDTEBS_ERROR"/>
+                                                <con2:param name="detalleCDTResponse">
+                                                    <con2:path>$DetalleCDTRs</con2:path>
+                                                </con2:param>
+                                                <con2:param name="consultarEstadoClientesBancaEmpresasResponse">
+                                                    <con2:path>&lt;error/></con2:path>
+                                                </con2:param>
+                                            </con2:xqueryTransform>
+                                        </con1:expr>
+                                    </con1:replace>
+                                </con:action-override>
+                                <con:action-override id="_ActionId-ad48657.N255d001c.0.18683709dfb.N7cd9">
+                                    <con1:replace xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con1:expr>
+                                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:resource ref="CDTBancaEmpresasEBS/Resources/XQUERYs/xq_OUT_ConsultarDetalleCDTEBS_ERROR"/>
+                                                <con2:param name="detalleCDTResponse">
+                                                    <con2:path>$DetalleCDTRs</con2:path>
+                                                </con2:param>
+                                                <con2:param name="consultarEstadoClientesBancaEmpresasResponse">
+                                                    <con2:path>$ConsultarEstatoClientesBancaEmpresasRs</con2:path>
+                                                </con2:param>
+                                            </con2:xqueryTransform>
+                                        </con1:expr>
+                                    </con1:replace>
+                                </con:action-override>
+                            </con:template-overrides>
+                        </con:branch>
+                        <con:default-branch/>
+                    </con:branch-table>
+                </con:branch-node>
+            </con:template-branch-override>
+        </con:template-overrides>
+    </con:router>
+    <con:template ref="ComponentesComunesBancaEmpresa/Resources/Template/EBS/EBS_PipelineTemplateBancaEmpresasV1"/>
+</con:pipelineEntry>

@@ -1,0 +1,61 @@
+<xsd:schema targetNamespace="http://xmlns.bancocajasocial.com/co/canales/schemas/ebs/ConsultarDetalleCDT/v1.0"
+            elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://xmlns.bancocajasocial.com/co/canales/schemas/ebs/ConsultarDetalleCDT/v1.0"
+            xmlns:entcab="http://xmlns.bancocajasocial.com/co/canales/schemas/entidades/Cabeceras/v1.0">
+  <!--Importa Schemas-->
+  <xsd:import schemaLocation="../../../CanalesComunes/Resources/Schemas/Entidades/Cabeceras.xsd"
+              namespace="http://xmlns.bancocajasocial.com/co/canales/schemas/entidades/Cabeceras/v1.0"/>
+  <xsd:element name="ConsultarDetalleCDTRequest" type="tns:ConsultarDetalleCDTRequestType"/>
+  <xsd:element name="ConsultarDetalleCDTResponse" type="tns:ConsultarDetalleCDTResponseType"/>
+  <!--Declaración de mensajes-->
+  <xsd:complexType name="ConsultarDetalleCDTRequestType">
+    <xsd:sequence>
+      <xsd:element name="cabeceraEntrada" type="entcab:CabeceraEntradaType" minOccurs="1"/>
+      <xsd:element name="identificadorProductoBanco" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ConsultarDetalleCDTResponseType">
+    <xsd:sequence>
+      <xsd:element name="cabeceraSalida" type="entcab:CabeceraSalidaType"/>
+      <xsd:element name="tipoCDT" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="numeroCDT" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="fechaProximoVencimiento" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="ultimoVencimiento" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="montoOriginal" minOccurs="1" maxOccurs="1">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:totalDigits value="12"/>
+            <xsd:fractionDigits value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="tasa" minOccurs="1" maxOccurs="1">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:totalDigits value="12"/>
+            <xsd:fractionDigits value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="titular" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="tipoDocumento" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="numeroDocumento" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="estadoCDT" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="saldoTotal" minOccurs="1" maxOccurs="1">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:decimal">
+            <xsd:totalDigits value="12"/>
+            <xsd:fractionDigits value="2"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="cuentasAsociadas" minOccurs="1" maxOccurs="unbounded">
+        <xsd:complexType>
+        <xsd:sequence>
+          <xsd:element name="numeroCuentaAsociada" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

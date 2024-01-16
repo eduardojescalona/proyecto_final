@@ -1,0 +1,17 @@
+<dvm name="DVM_TIPO_PRODUCTO_CDT" xmlns="http://xmlns.oracle.com/dvm">
+  <description/>
+  <columns>
+    <column name="KEY"/>
+    <column name="VALUE"/>
+  </columns>
+  <rows>
+    <row>
+      <cell>25</cell>
+      <cell>CDT</cell>
+    </row>
+    <row>
+      <cell>29</cell>
+      <cell>CDAT DíaDía</cell>
+    </row>
+  </rows>
+</dvm>
