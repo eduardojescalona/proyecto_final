@@ -75,4 +75,4 @@ declare function local:func($detalleCDTResponse as element() (:: schema-element(
     </ns3:ConsultarDetalleCDTResponse>
 };
 
-local:func($detalleCDTResponse, $consultarEstadoClientesBancaEmpresasResponse )
+local:func($detalleCDTResponse, $consultarEstadoClientesBancaEmpresasResponse)
